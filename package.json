@@ -1,0 +1,41 @@
+{
+  "name": "gulp-abraia",
+  "version": "0.1.0",
+  "description": "Optimize JPEG, PNG, GIF, SVG, and WebP images",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abraia/gulp-abraia.git"
+  },
+  "keywords": [
+    "gulpplugin",
+    "gulp",
+    "image",
+    "picture",
+    "compress",
+    "optimize",
+    "jpeg",
+    "jpg",
+    "png",
+    "gif",
+    "svg",
+    "webp"
+  ],
+  "author": "Jorge Rodriguez Araujo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/abraia/gulp-abraia/issues"
+  },
+  "homepage": "https://github.com/abraia/gulp-abraia#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "through2": "^3.0.0"
+  },
+  "dependencies": {
+    "abraia": "^0.4.1",
+    "plugin-error": "^1.0.1"
+  }
+}
