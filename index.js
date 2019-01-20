@@ -1,11 +1,11 @@
-const through = require('through2')
+const through = require('through2-concurrent')
 const PluginError = require('plugin-error')
 const abraia = require('abraia/abraia')
 
 const PLUGIN_NAME = 'gulp-abraia'
 
 const gulpAbraia = () => {
-  return through.obj(function (file, enc, cb) {
+  return through.obj({ maxConcurrency: 3 }, function (file, enc, cb) {
     if (file.isNull()) return cb(null, file)
     if (file.isBuffer()) {
       // file.contents = file.contents
