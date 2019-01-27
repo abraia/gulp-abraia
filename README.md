@@ -7,11 +7,13 @@ Optimize JPEG, PNG, GIF, SVG, and WebP images with [Abraia](https://abraia.me).
 
 ## Install
 
+Install gulp and the plugin:
+
 ```sh
 npm install gulp gulp-abraia gulp-cache --save-dev
 ```
 
-Get your [free API Key](https://abraia.me/docs/getting-started) and define the
+Get your [free API key](https://abraia.me/docs/getting-started) and define the
 `ABRAIA_KEY` environment variable.
 
 ```sh
