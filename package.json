@@ -1,7 +1,7 @@
 {
   "name": "gulp-abraia",
-  "version": "0.1.3",
-  "description": "Optimize JPEG, PNG, GIF, SVG, and WebP images",
+  "version": "0.1.4",
+  "description": "Optimize JPEG, PNG, GIF, SVG, and WebP ecommerce images",
   "main": "index.js",
   "scripts": {
     "test": "nyc mocha --reporter spec",
