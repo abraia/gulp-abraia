@@ -1,9 +1,13 @@
 [![npm version](https://img.shields.io/npm/v/gulp-abraia.svg)](https://www.npmjs.com/package/gulp-abraia)
+[![Build Status](https://travis-ci.org/abraia/gulp-abraia.svg)](https://travis-ci.org/abraia/gulp-abraia)
+[![Coverage Status](https://coveralls.io/repos/github/abraia/gulp-abraia/badge.svg)](https://coveralls.io/github/abraia/gulp-abraia)
 ![npm vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/gulp-abraia.svg)
 
 # Abraia gulp plugin
 
 Optimize JPEG, PNG, GIF, SVG, and WebP images with [Abraia](https://abraia.me).
+
+[Optimized fashion clothes picture](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-clothes.jpg)
 
 ## Install
 

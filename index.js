@@ -1,12 +1,13 @@
 const through = require('through2-concurrent')
 const PluginError = require('plugin-error')
 const log = require('fancy-log')
-const c = require('ansy-colors')
+const c = require('ansi-colors')
+
 const abraia = require('abraia/abraia')
 
 const PLUGIN_NAME = 'gulp-abraia'
 
-const sizeFormat = (bytes, decimals = 2) => {
+const sizeFormat = (bytes, decimals = 1) => {
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
   let value = 0
   let u = -1
