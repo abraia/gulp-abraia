@@ -12,14 +12,23 @@ describe('gulp-abraia', () => {
   //       // err.message.should.eql('gulp-concat: Streaming not supported')
   //       done()
   //     })
-  // }).timeout(25000)
+  // }).timeout(20000)
 
-  it('should return result from buffer file', (done) => {
+  it('optimize image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
       .pipe(abraia())
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(25000)
+  }).timeout(20000)
+
+  it('resize image from buffer file', (done) => {
+    gulp.src('images/fashion-clothes.jpg')
+      .pipe(abraia({ width: 750 }))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(20000)
 })
