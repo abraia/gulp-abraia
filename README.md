@@ -5,11 +5,11 @@
 
 # Abraia gulp plugin
 
-Automate your image optimization workflows getting a best performance ecommerce
+Automate your image optimization workflows and get a best performant ecommerce
 based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization).
 We optimize JPEG, PNG, GIF, SVG, and WebP images to provide the best visual
 quality - for fashion ecommerce websites - with the minimal file size. We
-analyze each image to adapt resize and compression operations to every case.
+analyze each image to adjust resize and compression operations to every case.
 
 ![Optimized fashion clothes picture](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-clothes.jpg)
 

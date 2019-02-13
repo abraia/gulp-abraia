@@ -34,9 +34,12 @@ const gulpAbraia = (options) => {
           if (options || saved > 0) file.contents = data
           return cb(null, file)
         })
-        // .catch(error => {
-        //   return cb(new PluginError(PLUGIN_NAME, error))
-        // })
+        .catch(error => {
+          const status = error.response.status
+          if (status === 401) return cb(new PluginError(PLUGIN_NAME, 'Error 401: Set ABRAIA_KEY as environment variable'))
+          if (status === 403) return cb(new PluginError(PLUGIN_NAME, 'Error 403: Buy more credits to continue optimizing'))
+          return cb(new PluginError(PLUGIN_NAME, error.message))
+        })
     }
   })
 }
