@@ -25,8 +25,15 @@ const gulpAbraia = (options) => {
     if (file.isStream()) return cb(new PluginError(PLUGIN_NAME, 'Streams are not supported'))
     if (file.isBuffer()) {
       log(`${PLUGIN_NAME}:`, 'compressing ' + c.magenta(file.relative) + '...')
-      abraia.fromFile(file).resize(options).toBuffer()
+      const fmt = (options && options.rename && options.rename.extname) ? { fmt: options.rename.extname.slice(1).toLowerCase() } : undefined
+      abraia.fromFile(file).resize(options).toBuffer(fmt)
         .then(data => {
+          if (options && options.rename) {
+            const { prefix, suffix, extname } = options.rename
+            if (suffix) file.stem = `${file.stem}${suffix}`
+            if (prefix) file.stem = `${prefix}${file.stem}`
+            if (extname) file.extname = extname
+          }
           const saved = file.contents.length - data.length
           const percent = saved / (file.contents.length + 0.00001) * 100
           const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`
