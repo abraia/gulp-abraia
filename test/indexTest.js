@@ -15,7 +15,7 @@ describe('gulp-abraia', () => {
 
   it('resize image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
-      .pipe(abraia({ width: 750 }))
+      .pipe(abraia([{ width: 750 }]))
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
@@ -24,7 +24,7 @@ describe('gulp-abraia', () => {
 
   it('convert image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
-      .pipe(abraia({ rename: { extname: '.webp' } }))
+      .pipe(abraia([{ rename: { extname: '.webp' } }]))
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
