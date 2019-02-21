@@ -34,16 +34,11 @@ const gulpAbraia = (options) => {
               const variant = variants[k]
               const fmt = (variant && variant.rename && variant.rename.extname) ? { fmt: variant.rename.extname.slice(1).toLowerCase() } : undefined
               const data = await upload.resize(variant).toBuffer(fmt)
-              const newFile = new Vinyl({
-                cwd: file.cwd,
-                base: file.base,
-                path: file.path,
-                contents: file.contents
-              })
+              const newFile = new Vinyl(file)
               if (variant && variant.rename) {
                 const { prefix, suffix, extname } = variant.rename
-                if (suffix) newFile.stem = `${file.stem}${suffix}`
-                if (prefix) newFile.stem = `${prefix}${file.stem}`
+                if (suffix) newFile.stem = `${newFile.stem}${suffix}`
+                if (prefix) newFile.stem = `${prefix}${newFile.stem}`
                 if (extname) newFile.extname = extname
               }
               const saved = file.contents.length - data.length
