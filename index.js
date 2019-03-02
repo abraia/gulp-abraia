@@ -4,6 +4,9 @@ const Vinyl = require('vinyl')
 const log = require('fancy-log')
 const c = require('ansi-colors')
 
+const config = require('abraia/config')
+config.folder = 'gulp/'
+
 const abraia = require('abraia/abraia')
 
 const PLUGIN_NAME = 'gulp-abraia'
@@ -44,7 +47,7 @@ const gulpAbraia = (options) => {
               const saved = file.contents.length - data.length
               const percent = saved / (file.contents.length + 0.00001) * 100
               const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`
-              log(`${PLUGIN_NAME}:`, c.green('✔ ') + c.magenta(file.relative) + c.gray(` (${msg})`))
+              log(`${PLUGIN_NAME}:`, c.green('✔ ') + c.magenta(newFile.relative) + c.gray(` (${msg})`))
               if (options || saved > 0) newFile.contents = data
               this.push(newFile)
           }
