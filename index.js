@@ -1,6 +1,10 @@
 const through = require('through2-concurrent')
 const PluginError = require('plugin-error')
 const Vinyl = require('vinyl')
+const path = require('path')
+const util = require('util')
+const fs = require('fs')
+
 const log = require('fancy-log')
 const c = require('ansi-colors')
 
@@ -9,18 +13,40 @@ config.folder = 'gulp/'
 
 const abraia = require('abraia/abraia')
 
+const stat = util.promisify(fs.stat)
+
 const PLUGIN_NAME = 'gulp-abraia'
 
 const sizeFormat = (bytes, decimals = 1) => {
   const units = ['B', 'KB', 'MB', 'GB', 'TB']
   let value = 0
-  let u = -1
-  do {
+  for (var u = 0; u < units.length; u++) {
     value = bytes
     bytes /= 1024
-    u += 1
-  } while (Math.abs(bytes) >= 1 && u < units.length)
+    if (bytes > -1 && bytes < 1) break
+  }
   return value.toFixed(decimals) + ' ' + units[u]
+}
+
+const createNewFile = (file, variant, dest) => {
+  const newFile = new Vinyl(file)
+  if (dest) newFile.dirname = path.join(newFile.cwd, dest)
+  if (variant && variant.rename) {
+    const { prefix, suffix, extname } = variant.rename
+    if (suffix) newFile.stem = `${newFile.stem}${suffix}`
+    if (prefix) newFile.stem = `${prefix}${newFile.stem}`
+    if (extname) newFile.extname = extname
+  }
+  return newFile
+}
+
+const compareFiles = async (sourceStat, targetPath) => {
+  try {
+    const targetStat = await stat(targetPath)
+    return sourceStat.mtime > targetStat.mtime
+  } catch (err) {
+    return true
+  }
 }
 
 const gulpAbraia = (options) => {
@@ -31,32 +57,35 @@ const gulpAbraia = (options) => {
       const variants = (options) ? options : [{}]
       if (!variants.length) return cb(new PluginError(PLUGIN_NAME, 'Options are incorrect'))
       try {
-          log(`${PLUGIN_NAME}:`, 'optimizing ' + c.magenta(file.relative) + '...')
-          const upload = abraia.fromFile(file)
-          for (let k = 0; k < variants.length; k++) {
-              const variant = variants[k]
-              const fmt = (variant && variant.rename && variant.rename.extname) ? { fmt: variant.rename.extname.slice(1).toLowerCase() } : undefined
-              const data = await upload.resize(variant).toBuffer(fmt)
-              const newFile = new Vinyl(file)
-              if (variant && variant.rename) {
-                const { prefix, suffix, extname } = variant.rename
-                if (suffix) newFile.stem = `${newFile.stem}${suffix}`
-                if (prefix) newFile.stem = `${prefix}${newFile.stem}`
-                if (extname) newFile.extname = extname
-              }
-              const saved = file.contents.length - data.length
-              const percent = saved / (file.contents.length + 0.00001) * 100
-              const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`
-              log(`${PLUGIN_NAME}:`, c.green('✔ ') + c.magenta(newFile.relative) + c.gray(` (${msg})`))
-              if (options || saved > 0) newFile.contents = data
-              this.push(newFile)
+        let upload
+        for (let k = 0; k < variants.length; k++) {
+          const variant = variants[k]
+          // const dest = 'public'
+          const dest = undefined
+          // TODO: Add dest parameter just to process unprocessed images
+          const newFile = createNewFile(file, variant, dest)
+          const compare = await compareFiles(file.stat, newFile.path)
+          // console.log(compare, newFile.path)
+          if (!dest || compare) {
+            if (!upload) {
+              log(`${PLUGIN_NAME}:`, 'optimizing ' + c.magenta(file.relative) + '...')
+              upload = abraia.fromFile(file)
+            }
+            const fmt = (variant && variant.rename && variant.rename.extname) ? { fmt: variant.rename.extname.slice(1).toLowerCase() } : undefined
+            const data = await upload.resize(variant).toBuffer(fmt)
+            const saved = file.contents.length - data.length
+            const percent = saved / (file.contents.length + 0.00001) * 100
+            const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`
+            log(`${PLUGIN_NAME}:`, c.green('✔ ') + c.magenta(newFile.relative) + c.gray(` (${msg})`))
+            if (options || saved > 0) newFile.contents = data
+            this.push(newFile)
           }
-          return cb()
-      } catch (error) {
-          const { status } = error.response
-          if (status === 401) return cb(new PluginError(PLUGIN_NAME, 'Error 401: Set ABRAIA_KEY as environment variable'))
-          if (status === 403) return cb(new PluginError(PLUGIN_NAME, 'Error 403: Buy more credits to continue optimizing'))
-          return cb(new PluginError(PLUGIN_NAME, error.message))
+        }
+        return cb()
+      } catch (err) {
+        if (err.code === 401) return cb(new PluginError(PLUGIN_NAME, 'Error 401: Set ABRAIA_KEY as environment variable'))
+        if (err.code === 402) return cb(new PluginError(PLUGIN_NAME, 'Error 402: Buy more credits to continue optimizing'))
+        return cb(new PluginError(PLUGIN_NAME, `Error ${err.code}: ${err.message}`))
       }
     }
   })

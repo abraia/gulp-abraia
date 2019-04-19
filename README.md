@@ -22,11 +22,7 @@ npm install gulp gulp-abraia gulp-cache --save-dev
 ```
 
 Get your [free API key](https://abraia.me/docs/getting-started) and define the
-`ABRAIA_KEY` environment variable.
-
-```sh
-export ABRAIA_KEY=your_api_key
-```
+`ABRAIA_KEY` environment variable, or define it at the start of your `gulpfile.js`.
 
 ## Usage
 
@@ -34,6 +30,8 @@ To optimize all the images in a folder (`images`) and stay watching for new
 files, you just need to add the next code to your `gulpfile.js`.
 
 ```js
+process.env.ABRAIA_KEY = 'YOUR_API_KEY'
+
 const gulp = require('gulp')
 const cache = require('gulp-cache')
 const abraia = require('gulp-abraia')
