@@ -72,7 +72,7 @@ const gulpAbraia = (options) => {
               upload = abraia.fromFile(file)
             }
             const fmt = (variant && variant.rename && variant.rename.extname) ? { fmt: variant.rename.extname.slice(1).toLowerCase() } : undefined
-            const data = await upload.resize(variant).toBuffer(fmt)
+            const data = await upload.resize(variant).process(variant).toBuffer(fmt)
             const saved = file.contents.length - data.length
             const percent = saved / (file.contents.length + 0.00001) * 100
             const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`
