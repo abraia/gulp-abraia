@@ -1,7 +1,6 @@
-[![npm version](https://img.shields.io/npm/v/gulp-abraia.svg)](https://www.npmjs.com/package/gulp-abraia)
-[![Build Status](https://travis-ci.org/abraia/gulp-abraia.svg)](https://travis-ci.org/abraia/gulp-abraia)
-[![Coverage Status](https://coveralls.io/repos/github/abraia/gulp-abraia/badge.svg)](https://coveralls.io/github/abraia/gulp-abraia)
-![npm vulnerabilities](https://img.shields.io/snyk/vulnerabilities/npm/gulp-abraia.svg)
+[![npm version](https://img.shields.io/npm/v/gulp-abraia.svg?style=flat-square)](https://www.npmjs.com/package/gulp-abraia)
+[![Build Status](https://img.shields.io/travis/abraia/gulp-abraia.svg?style=flat-square)](https://travis-ci.org/abraia/gulp-abraia)
+[![Coverage Status](https://img.shields.io/coveralls/github/abraia/gulp-abraia/badge.svg?style=flat-square)](https://coveralls.io/github/abraia/gulp-abraia)
 
 # Abraia gulp plugin
 
@@ -21,7 +20,7 @@ Install gulp and the plugin:
 npm install gulp gulp-abraia gulp-cache --save-dev
 ```
 
-Get your [free API key](https://abraia.me/docs/getting-started) and define the
+Get your [free API key](https://abraia.me/docs/getting-started) and set the
 `ABRAIA_KEY` environment variable, or define it at the start of your `gulpfile.js`.
 
 ## Usage

@@ -28,11 +28,11 @@ const sizeFormat = (bytes, decimals = 1) => {
   return value.toFixed(decimals) + ' ' + units[u]
 }
 
-const createNewFile = (file, variant, dest) => {
+const createNewFile = (file, rename, dest) => {
   const newFile = new Vinyl(file)
   if (dest) newFile.dirname = path.join(newFile.cwd, dest)
-  if (variant && variant.rename) {
-    const { prefix, suffix, extname } = variant.rename
+  if (rename) {
+    const { prefix, suffix, extname } = rename
     if (suffix) newFile.stem = `${newFile.stem}${suffix}`
     if (prefix) newFile.stem = `${prefix}${newFile.stem}`
     if (extname) newFile.extname = extname
@@ -59,11 +59,12 @@ const gulpAbraia = (options) => {
       try {
         let upload
         for (let k = 0; k < variants.length; k++) {
-          const variant = variants[k]
-          // const dest = 'public'
-          const dest = undefined
+          const variant = Object.assign({}, variants[k])
+          const { rename } = variants[k]
+          delete variant.rename
+          const dest = undefined  // const dest = 'public'
           // TODO: Add dest parameter just to process unprocessed images
-          const newFile = createNewFile(file, variant, dest)
+          const newFile = createNewFile(file, rename, dest)
           const compare = await compareFiles(file.stat, newFile.path)
           // console.log(compare, newFile.path)
           if (!dest || compare) {
@@ -71,7 +72,7 @@ const gulpAbraia = (options) => {
               log(`${PLUGIN_NAME}:`, 'optimizing ' + c.magenta(file.relative) + '...')
               upload = abraia.fromFile(file)
             }
-            const fmt = (variant && variant.rename && variant.rename.extname) ? { fmt: variant.rename.extname.slice(1).toLowerCase() } : undefined
+            const fmt = (rename && rename.extname) ? { fmt: rename.extname.slice(1).toLowerCase() } : undefined
             const data = await upload.resize(variant).process(variant).toBuffer(fmt)
             const saved = file.contents.length - data.length
             const percent = saved / (file.contents.length + 0.00001) * 100
