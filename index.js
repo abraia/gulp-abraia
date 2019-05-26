@@ -54,7 +54,8 @@ const gulpAbraia = (options) => {
     if (file.isNull()) return cb(null, file)
     if (file.isStream()) return cb(new PluginError(PLUGIN_NAME, 'Streams are not supported'))
     if (file.isBuffer()) {
-      const variants = (options) ? options : [{}]
+      const dest = (options && options.constructor === Object) ? options.dest : undefined
+      const variants = (options) ? ((options.constructor === Array) ? options : options.variants ? options.variants : [{}]) : [{}]
       if (!variants.length) return cb(new PluginError(PLUGIN_NAME, 'Options are incorrect'))
       try {
         let upload
@@ -62,11 +63,8 @@ const gulpAbraia = (options) => {
           const variant = Object.assign({}, variants[k])
           const { rename } = variants[k]
           delete variant.rename
-          const dest = undefined  // const dest = 'public'
-          // TODO: Add dest parameter just to process unprocessed images
           const newFile = createNewFile(file, rename, dest)
           const compare = await compareFiles(file.stat, newFile.path)
-          // console.log(compare, newFile.path)
           if (!dest || compare) {
             if (!upload) {
               log(`${PLUGIN_NAME}:`, 'optimizing ' + c.magenta(file.relative) + '...')

@@ -67,8 +67,8 @@ gulp.task('variants', () => {
 })
 ```
 
-With this simple code you get three optimized variants to use in your
-responsive design.
+With this simple code you get three optimized variants to use in your responsive 
+design.
 
 Supported renaming options are:
 
