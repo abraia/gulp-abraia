@@ -67,7 +67,7 @@ const gulpAbraia = (options) => {
           const compare = await compareFiles(file.stat, newFile.path)
           if (!dest || compare) {
             if (!upload) {
-              log(`${PLUGIN_NAME}:`, 'optimizing ' + c.magenta(file.relative) + '...')
+              log(`${PLUGIN_NAME}:`, 'processing ' + c.magenta(file.relative) + '...')
               upload = abraia.fromFile(file)
             }
             const fmt = (rename && rename.extname) ? { fmt: rename.extname.slice(1).toLowerCase() } : undefined
