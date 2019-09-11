@@ -33,13 +33,43 @@ describe('gulp-abraia', () => {
       })
   }).timeout(30000)
 
-  // it('emit error on wrong file', (done) => {
-  //   gulp.src('index.js')
-  //     .pipe(abraia())
-  //     .once('error', (err) => {
-  //       console.error(err)
-  //       assert(err instanceof Object)
-  //       done()
-  //     })
-  // }).timeout(30000)
+  it('smartcrop image from buffer file', (done) => {
+    gulp.src('images/fashion-clothes.jpg')
+      .pipe(abraia([{ width: 750, height: 1500, rename: { suffix: '_s750x1500' } }]))
+      // .pipe(gulp.dest('images'))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(30000)
+
+  it('padding image from buffer file', (done) => {
+    gulp.src('images/fashion-clothes.jpg')
+      .pipe(abraia([{ width: 750, height: 750, rename: { suffix: '_p750x750' } }]))
+      // .pipe(gulp.dest('images'))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(30000)
+
+  it('canvas image from buffer file', (done) => {
+    gulp.src('images/fashion-clothes.jpg')
+      .pipe(abraia([{ width: 750, action: 'abraia.atn', fmt: 'jpg', rename: { suffix: '_c750x750' } }]))
+      // .pipe(gulp.dest('images'))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(30000)
+
+  it('emit error on wrong file', (done) => {
+    gulp.src('index.js')
+      .pipe(abraia())
+      .once('error', (err) => {
+        console.error(err)
+        assert(err instanceof Object)
+        done()
+      })
+  }).timeout(30000)
 })

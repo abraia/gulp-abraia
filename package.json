@@ -1,6 +1,6 @@
 {
   "name": "gulp-abraia",
-  "version": "0.4.3",
+  "version": "0.4.4",
   "description": "Optimize JPEG, PNG, GIF, SVG, and WebP images for web",
   "main": "index.js",
   "scripts": {

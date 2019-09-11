@@ -30,7 +30,7 @@ const sizeFormat = (bytes, decimals = 1) => {
 
 const createNewFile = (file, rename, dest) => {
   const newFile = new Vinyl(file)
-  if (dest) newFile.dirname = path.join(newFile.cwd, dest)
+  if (dest) newFile.dirname = path.dirname(path.join(newFile.cwd, dest, newFile.relative))
   if (rename) {
     const { prefix, suffix, extname } = rename
     if (suffix) newFile.stem = `${newFile.stem}${suffix}`

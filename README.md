@@ -10,7 +10,7 @@ We optimize JPEG, PNG, GIF, SVG, and WebP images to provide the best visual
 quality - for fashion ecommerce websites - with the minimal file size. We
 analyze each image to adjust resize and compression operations to every case.
 
-![Optimized fashion clothes picture](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-clothes.jpg)
+![Optimized fashion clothes pictures](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-mosaic.jpg)
 
 ## Install
 
