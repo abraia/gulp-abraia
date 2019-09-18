@@ -4,17 +4,17 @@
 
 # Abraia gulp plugin
 
-Automate your image optimization workflows and get a best performant ecommerce
-based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization).
-We optimize JPEG, PNG, GIF, SVG, and WebP images to provide the best visual
-quality - for fashion ecommerce websites - with the minimal file size. We
-analyze each image to adjust resize and compression operations to every case.
+Automate your web image optimization workflows and get a best performant ecommerce.
+Based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization),
+you can easily optimize and transform JPEG, PNG, GIF, WebP, and SVG images, providing
+the best visual quality with the minimal file size. We analyze each image to adjust
+resize and compression operations to every case.
 
 ![Optimized fashion clothes pictures](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-mosaic.jpg)
 
 ## Install
 
-Install gulp and the plugin:
+Install Gulp 4 and the plugin:
 
 ```sh
 npm install gulp gulp-abraia gulp-cache --save-dev
@@ -36,13 +36,13 @@ const cache = require('gulp-cache')
 const abraia = require('gulp-abraia')
 
 gulp.task('optimize', () => {
-  return gulp.src('images/*')
+  return gulp.src('images/**')
     .pipe(cache(abraia()))
     .pipe(gulp.dest('output'))
 })
 
 gulp.task('watch', () => {
-  gulp.watch('images/*', gulp.series('optimize'))
+  gulp.watch('images/**', gulp.series('optimize'))
 })
 ```
 
@@ -67,7 +67,7 @@ gulp.task('variants', () => {
 })
 ```
 
-With this simple code you get three optimized variants to use in your responsive 
+With this simple code you get three optimized variants to use in your responsive
 design.
 
 Supported renaming options are:
@@ -81,6 +81,9 @@ a suffix to the file name with `suffix: '-thumbnail'`
 - `extname` to change the file format or to force the conversion of an image
 type. For instance, you can convert all your images to the WebP format with
  `extname: 'webp'`.
+
+Moreover, now it is very easy automate branding and editing operations defining
+actions from the [web console](https://abraia.me/console).
 
 ## License
 

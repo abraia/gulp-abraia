@@ -83,7 +83,7 @@ const gulpAbraia = (options) => {
         return cb()
       } catch (err) {
         if (err.code === 401) return cb(new PluginError(PLUGIN_NAME, 'Error 401: Set ABRAIA_KEY as environment variable'))
-        if (err.code === 402) return cb(new PluginError(PLUGIN_NAME, 'Error 402: Buy more credits to continue optimizing'))
+        if (err.code === 402) return cb(new PluginError(PLUGIN_NAME, 'Error 402: Buy more credits to continue processing'))
         return cb(new PluginError(PLUGIN_NAME, `Error ${err.code}: ${err.message}`))
       }
     }
