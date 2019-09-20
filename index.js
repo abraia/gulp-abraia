@@ -28,6 +28,27 @@ const sizeFormat = (bytes, decimals = 1) => {
   return value.toFixed(decimals) + ' ' + units[u]
 }
 
+const parseOutput = (output, params) => {
+  String.prototype.interpolate = function (params) {
+    const names = Object.keys(params)
+    const vals = Object.values(params)
+    return new Function(...names, `return \`${this}\`;`)(...vals)
+  }
+  const template = output.replace(/${/g, '{').replace(/{/g, '${')
+  return template.interpolate(params)
+}
+
+const createFile = (file, output, dest) => {
+  const newFile = new Vinyl(file)
+  if (dest) newFile.dirname = path.dirname(path.join(newFile.cwd, dest, newFile.relative))
+  if (output) {
+    const newName = parseOutput(output, { name: newFile.stem, ext: newFile.extname.slice(1) })
+    newFile.stem = newName.slice(0, newName.lastIndexOf('.'))
+    newFile.extname = `.${newName.split('.').pop()}`
+  }
+  return newFile
+}
+
 const createNewFile = (file, rename, dest) => {
   const newFile = new Vinyl(file)
   if (dest) newFile.dirname = path.dirname(path.join(newFile.cwd, dest, newFile.relative))
@@ -61,17 +82,17 @@ const gulpAbraia = (options) => {
         let upload
         for (let k = 0; k < variants.length; k++) {
           const variant = Object.assign({}, variants[k])
-          const { rename } = variants[k]
+          const { rename, output } = variants[k]
           delete variant.rename
-          const newFile = createNewFile(file, rename, dest)
+          const newFile = rename ? createNewFile(file, rename, dest) : createFile(file, output, dest)
           const compare = await compareFiles(file.stat, newFile.path)
           if (!dest || compare) {
             if (!upload) {
               log(`${PLUGIN_NAME}:`, 'processing ' + c.magenta(file.relative) + '...')
               upload = abraia.fromFile(file)
             }
-            const fmt = (rename && rename.extname) ? { fmt: rename.extname.slice(1).toLowerCase() } : undefined
-            const data = await upload.resize(variant).process(variant).toBuffer(fmt)
+            const fmt = newFile.extname.slice(1).toLowerCase()
+            const data = await upload.resize(variant).process(variant).toBuffer({ fmt })
             const saved = file.contents.length - data.length
             const percent = saved / (file.contents.length + 0.00001) * 100
             const msg = `saved ${sizeFormat(saved)} - ${percent.toFixed(1)}%`

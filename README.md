@@ -53,16 +53,16 @@ gulp watch
 ## Options
 
 To generate multiple variants for each image you just need to specify the size
-and renaming policies.
+and the output name policy.
 
 ```js
 gulp.task('variants', () => {
-  return gulp.src('images/*')
-    .pipe(cache(abraia([
-      { width: 1920, rename: { suffix: '-1920' }},
-      { width: 750, rename: { suffix: '-750' }},
-      { width: 375, rename: { suffix: '-375' }}
-    ])))
+  return gulp.src('images/**')
+    .pipe(abraia([
+      { width: 1920, output: '{name}-1920.{ext}' },
+      { width: 750, output: '{name}-750.{ext}' },
+      { width: 375, output: '{name}-375.{ext}' }
+    ]))
     .pipe(gulp.dest('output'))
 })
 ```
@@ -70,7 +70,12 @@ gulp.task('variants', () => {
 With this simple code you get three optimized variants to use in your responsive
 design.
 
-Supported renaming options are:
+Output name policies are now defined with a syntax like Javascript ES6 template
+literals without $ simbols. The input file name and extension are defined as
+`name` and `ext` variables.
+
+This simplifies renaming policies (`rename`), replacing the verbose syntax used
+before:
 
 - `prefix` to insert something before the file name. For instance you can store
 the new file in a subfolder just with `prefix: '750/'`.
@@ -82,8 +87,34 @@ a suffix to the file name with `suffix: '-thumbnail'`
 type. For instance, you can convert all your images to the WebP format with
  `extname: 'webp'`.
 
-Moreover, now it is very easy automate branding and editing operations defining
-actions from the [web console](https://abraia.me/console).
+## New features
+
+* Now it is very easy to automate branding and editing operations creating actions
+with the WYSIWYG editor from the the [web console](https://abraia.me/console).
+
+```js
+gulp.task('variants', () => {
+  return gulp.src('images/**')
+    .pipe(abraia([
+      { width: 750, action: 'abraia.atn', output: '{name}-brand.{ext}' }
+    ]))
+    .pipe(gulp.dest('output'))
+})
+```
+
+* Initial support for [video optimization](https://abraia.me/docs/video-optimization)
+has been added. You can now optimize high quality short videos with a maximum file
+size of 100MB.
+
+```js
+gulp.task('variants', () => {
+  return gulp.src('videos/*.mp4')
+    .pipe(abraia([
+      { height: 720, output: '{name}-720p.{ext}' }
+    ]))
+    .pipe(gulp.dest('output'))
+})
+```
 
 ## License
 
