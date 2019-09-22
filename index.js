@@ -11,32 +11,12 @@ const c = require('ansi-colors')
 const config = require('abraia/config')
 config.folder = 'gulp/'
 
+const { sizeFormat, parseOutput } = require('abraia/client')
 const abraia = require('abraia/abraia')
 
 const stat = util.promisify(fs.stat)
 
 const PLUGIN_NAME = 'gulp-abraia'
-
-const sizeFormat = (bytes, decimals = 1) => {
-  const units = ['B', 'KB', 'MB', 'GB', 'TB']
-  let value = 0
-  for (var u = 0; u < units.length; u++) {
-    value = bytes
-    bytes /= 1024
-    if (bytes > -1 && bytes < 1) break
-  }
-  return value.toFixed(decimals) + ' ' + units[u]
-}
-
-const parseOutput = (output, params) => {
-  String.prototype.interpolate = function (params) {
-    const names = Object.keys(params)
-    const vals = Object.values(params)
-    return new Function(...names, `return \`${this}\`;`)(...vals)
-  }
-  const template = output.replace(/${/g, '{').replace(/{/g, '${')
-  return template.interpolate(params)
-}
 
 const createFile = (file, output, dest) => {
   const newFile = new Vinyl(file)
