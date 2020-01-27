@@ -36,7 +36,6 @@ describe('gulp-abraia', () => {
   it('smartcrop image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
       .pipe(abraia([{ width: 750, height: 1500, output: '{name}_s750x1500.{ext}' }]))
-      // .pipe(gulp.dest('images'))
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
@@ -55,7 +54,7 @@ describe('gulp-abraia', () => {
 
   it('canvas image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
-      .pipe(abraia([{ width: 750, action: 'abraia.atn', output: '{name}_c750x750.jpg' }]))
+      .pipe(abraia([{ width: 750, action: 'test.atn', output: '{name}_c750x750.jpg' }]))
       // .pipe(gulp.dest('images'))
       .once('data', (data) => {
         assert(data.isBuffer())

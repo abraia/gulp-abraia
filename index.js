@@ -11,7 +11,7 @@ const c = require('ansi-colors')
 const config = require('abraia/config')
 config.folder = 'gulp/'
 
-const { sizeFormat, parseOutput } = require('abraia/client')
+const { sizeFormat, parseString } = require('abraia/utils')
 const abraia = require('abraia/abraia')
 
 const stat = util.promisify(fs.stat)
@@ -22,7 +22,7 @@ const createFile = (file, output, dest) => {
   const newFile = new Vinyl(file)
   if (dest) newFile.dirname = path.dirname(path.join(newFile.cwd, dest, newFile.relative))
   if (output) {
-    const newName = parseOutput(output, { name: newFile.stem, ext: newFile.extname.slice(1) })
+    const newName = parseString(output, { name: newFile.stem, ext: newFile.extname.slice(1) })
     newFile.stem = newName.slice(0, newName.lastIndexOf('.'))
     newFile.extname = `.${newName.split('.').pop()}`
   }
