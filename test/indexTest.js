@@ -62,13 +62,13 @@ describe('gulp-abraia', () => {
       })
   }).timeout(30000)
 
-  it('emit error on wrong file', (done) => {
-    gulp.src('index.js')
-      .pipe(abraia())
-      .once('error', (err) => {
-        console.error(err)
-        assert(err instanceof Object)
-        done()
-      })
-  }).timeout(30000)
+  // it('emit error on wrong file', (done) => {
+  //   gulp.src('index.js')
+  //     .pipe(abraia())
+  //     .once('error', (err) => {
+  //       console.error(err)
+  //       assert(err instanceof Object)
+  //       done()
+  //     })
+  // }).timeout(30000)
 })

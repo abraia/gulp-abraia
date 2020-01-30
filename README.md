@@ -4,11 +4,12 @@
 
 # Abraia gulp plugin
 
-Automate your web image optimization workflows and get a best performant ecommerce.
+Automate your web image and video optimization workflows and get a best performant ecommerce.
 Based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization),
 you can easily optimize and transform JPEG, PNG, GIF, WebP, and SVG images, providing
 the best visual quality with the minimal file size. We analyze each image to adjust
-resize and compression operations to every case.
+resize and compression operations to every case. You can also edit your images with
+templates and get [perfectly optimized videos for web](https://abraia.me/videos/).
 
 ![Optimized fashion clothes pictures](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-mosaic.jpg)
 
@@ -23,7 +24,7 @@ npm install gulp gulp-abraia gulp-cache --save-dev
 Get your [free API key](https://abraia.me/docs/getting-started) and set the
 `ABRAIA_KEY` environment variable, or define it at the start of your `gulpfile.js`.
 
-## Usage
+## Image optimization
 
 To optimize all the images in a folder (`images`) and stay watching for new
 files, you just need to add the next code to your `gulpfile.js`.
@@ -50,7 +51,7 @@ gulp.task('watch', () => {
 gulp watch
 ```
 
-## Options
+## Responsive images
 
 To generate multiple variants for each image you just need to specify the size
 and the output name policy.
@@ -70,6 +71,8 @@ gulp.task('variants', () => {
 With this simple code you get three optimized variants to use in your responsive
 design.
 
+### Renaming options
+
 Output name policies are now defined with a syntax like Javascript ES6 template
 literals without $ simbols. The input file name and extension are defined as
 `name` and `ext` variables.
@@ -87,10 +90,13 @@ a suffix to the file name with `suffix: '-thumbnail'`
 type. For instance, you can convert all your images to the WebP format with
  `extname: 'webp'`.
 
-## New features
+## Image editing
 
-* Now it is very easy to automate branding and editing operations creating actions
-with the WYSIWYG editor from the the [web console](https://abraia.me/console).
+Now, with the [web image editor](https://abraia.me/console/editor) you can easily
+create and use templates to automate your branding and editing operations. For
+instance you can use the web console to create your branding template (e.g. abraia.atn)
+and use it to brand, resize, and optimize to get all your images branded with a
+width of 750 pixels (`width: 750`) preserving the format our your original image.
 
 ```js
 gulp.task('variants', () => {
@@ -102,15 +108,18 @@ gulp.task('variants', () => {
 })
 ```
 
-* Initial support for [video optimization](https://abraia.me/docs/video-optimization)
-has been added. You can now optimize high quality short videos with a maximum file
-size of 100MB.
+## Video optimization
+
+You can now optimize videos (up to 5 minutes) for web with a maximum file size of 100MB.
+Combining cropping, resizing, overlaying options and best practices for [video
+optimization](https://abraia.me/docs/video-optimization/) never was so easy get all
+your videos ready for web and social media.
 
 ```js
 gulp.task('variants', () => {
-  return gulp.src('videos/*.mp4')
+  return gulp.src('videos/*')
     .pipe(abraia([
-      { height: 720, output: '{name}-720p.{ext}' }
+      { height: 720, output: '{name}-720p.mp4' }
     ]))
     .pipe(gulp.dest('output'))
 })
@@ -119,4 +128,3 @@ gulp.task('variants', () => {
 ## License
 
 This software is licensed under the MIT License. [View the license](LICENSE).
-
