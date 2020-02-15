@@ -2,18 +2,20 @@
 [![Build Status](https://img.shields.io/travis/abraia/gulp-abraia.svg?style=flat-square)](https://travis-ci.org/abraia/gulp-abraia)
 [![Coverage Status](https://img.shields.io/coveralls/github/abraia/gulp-abraia/badge.svg?style=flat-square)](https://coveralls.io/github/abraia/gulp-abraia)
 
-# Abraia gulp plugin
+# Abraia gulp image optimization
 
-Automate your web image and video optimization workflows and get a best performant ecommerce.
-Based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization),
+Automate your web image and video optimization workflows for ecommerce and marketing.
+Based on [Abraia's content-aware technology](https://abraia.me/docs/image-optimization/),
 you can easily optimize and transform JPEG, PNG, GIF, WebP, and SVG images, providing
-the best visual quality with the minimal file size. We analyze each image to adjust
-resize and compression operations to every case. You can also edit your images with
-templates and get [perfectly optimized videos for web](https://abraia.me/videos/).
+the best visual quality with the minimal file size. We analyze each image to precisely
+resize and compress every image and video.
 
 ![Optimized fashion clothes pictures](https://github.com/abraia/gulp-abraia/raw/master/images/fashion-mosaic.jpg)
 
-## Install
+You can also brand and watermark your images and videos with templates, or get
+[perfectly optimized videos for web](https://abraia.me/docs/video-optimization/).
+
+## Abraia plugin installation
 
 Install Gulp 4 and the plugin:
 
@@ -21,8 +23,8 @@ Install Gulp 4 and the plugin:
 npm install gulp gulp-abraia gulp-cache --save-dev
 ```
 
-Get your [free API key](https://abraia.me/docs/getting-started) and set the
-`ABRAIA_KEY` environment variable, or define it at the start of your `gulpfile.js`.
+Get your [Abraia API key](https://abraia.me/console/settings) and set the `ABRAIA_KEY`
+environment variable, or define it at the start of your `gulpfile.js`.
 
 ## Image optimization
 
@@ -53,14 +55,17 @@ gulp watch
 
 ## Responsive images
 
-To generate multiple variants for each image you just need to specify the size
-and the output name policy.
+Image compression is the last step on image optimization for a responsive design.
+To generate the multiple variants that you need to use in your responsive design,
+you just need to specify the size (commonly the width) and the output name policy
+for each derivant.
 
 ```js
 gulp.task('variants', () => {
   return gulp.src('images/**')
     .pipe(abraia([
       { width: 1920, output: '{name}-1920.{ext}' },
+      { width: 1125, output: '{name}-1125.{ext}' },
       { width: 750, output: '{name}-750.{ext}' },
       { width: 375, output: '{name}-375.{ext}' }
     ]))
@@ -68,35 +73,17 @@ gulp.task('variants', () => {
 })
 ```
 
-With this simple code you get three optimized variants to use in your responsive
-design.
+With this simple code you get three optimized variants to use in your mobile first
+responsive design (optimized for iPhones).
 
-### Renaming options
+## Image branding and editing
 
-Output name policies are now defined with a syntax like Javascript ES6 template
-literals without $ simbols. The input file name and extension are defined as
-`name` and `ext` variables.
+With the [web image editor](https://abraia.me/console/editor) you can easily use and
+create templates to automate your bulk operations for branding and editing. For
+instance, you can easily create a branding template (e.g. abraia.atn) and use it to
+brand and optimize all your images at once.
 
-This simplifies renaming policies (`rename`), replacing the verbose syntax used
-before:
-
-- `prefix` to insert something before the file name. For instance you can store
-the new file in a subfolder just with `prefix: '750/'`.
-
-- `suffix` to insert something after the file name. For instance you can append
-a suffix to the file name with `suffix: '-thumbnail'`
-
-- `extname` to change the file format or to force the conversion of an image
-type. For instance, you can convert all your images to the WebP format with
- `extname: 'webp'`.
-
-## Image editing
-
-Now, with the [web image editor](https://abraia.me/console/editor) you can easily
-create and use templates to automate your branding and editing operations. For
-instance you can use the web console to create your branding template (e.g. abraia.atn)
-and use it to brand, resize, and optimize to get all your images branded with a
-width of 750 pixels (`width: 750`) preserving the format our your original image.
+![Abraia image editor](https://github.com/abraia/gulp-abraia/raw/master/images/console-editor.jpg)
 
 ```js
 gulp.task('variants', () => {
@@ -124,6 +111,26 @@ gulp.task('variants', () => {
     .pipe(gulp.dest('output'))
 })
 ```
+
+## Configuation options
+
+The configuration optimions are [documented with the API](https://abraia.me/docs/api/).
+But you do not read any of this, because using the [web console](https://abraia.me/console/),
+you can easily download it. Just use the bulk tool to create your configuration.
+
+### Renaming options
+
+Output name policies are now defined with a syntax like Javascript ES6 template
+literals without $ simbols. The input file name and extension are defined as
+`name` and `ext` variables. So, you just need to build your output path using
+`{name}` as the placeholder for the file name, and `{ext}` for the extension.
+
+For instance:
+
+- You can store the new file in a subfolder just with `output: '750/{name}.{ext}'`.
+- You can append a suffix to the fie name with `output: '{name}-thumbnail.{ext}'`.
+- You can change the file format (image and video conversion) writing the extension
+like `output: '{name}.webp'`.
 
 ## License
 
