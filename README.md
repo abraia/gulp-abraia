@@ -121,7 +121,7 @@ gulp.task('variants', () => {
 
 ### Renaming options
 
-Output name policies are now defined with a syntax like Javascript ES6 template literals without $ simbols. The input file name and extension are defined as `name` and `ext` variables. So, you just need to build your output path using `{name}` as the placeholder for the file name, and `{ext}` for the extension.
+Output name policies are defined with a syntax like Javascript ES6 template literals without $ simbols. The input file name and its extensin are defined as `name` and `ext` variables. So, you just need to build your output path using `{name}` as the placeholder for the file name, and `{ext}` for the original file extension.
 
 For instance:
 

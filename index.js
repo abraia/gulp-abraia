@@ -29,18 +29,6 @@ const createFile = (file, output, dest) => {
   return newFile
 }
 
-const createNewFile = (file, rename, dest) => {
-  const newFile = new Vinyl(file)
-  if (dest) newFile.dirname = path.dirname(path.join(newFile.cwd, dest, newFile.relative))
-  if (rename) {
-    const { prefix, suffix, extname } = rename
-    if (suffix) newFile.stem = `${newFile.stem}${suffix}`
-    if (prefix) newFile.stem = `${prefix}${newFile.stem}`
-    if (extname) newFile.extname = extname
-  }
-  return newFile
-}
-
 const compareFiles = async (sourceStat, targetPath) => {
   try {
     const targetStat = await stat(targetPath)
@@ -62,9 +50,8 @@ const gulpAbraia = (options) => {
         let upload
         for (let k = 0; k < variants.length; k++) {
           const variant = Object.assign({}, variants[k])
-          const { rename, output } = variants[k]
-          delete variant.rename
-          const newFile = rename ? createNewFile(file, rename, dest) : createFile(file, output, dest)
+          const { output } = variants[k]
+          const newFile = createFile(file, output, dest)
           const compare = await compareFiles(file.stat, newFile.path)
           if (!dest || compare) {
             if (!upload) {
@@ -72,6 +59,7 @@ const gulpAbraia = (options) => {
               upload = abraia.fromFile(file)
             }
             const fmt = newFile.extname.slice(1).toLowerCase()
+            // TODO: Update to fix this mess; log(fmt, variant)
             const data = await upload.resize(variant).process(variant).toBuffer({ fmt })
             const saved = file.contents.length - data.length
             const percent = saved / (file.contents.length + 0.00001) * 100

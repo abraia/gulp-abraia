@@ -26,7 +26,7 @@ describe('gulp-abraia', () => {
 
   it('convert image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
-      .pipe(abraia([{ rename: { extname: '.webp' } }]))
+      .pipe(abraia([{ format: 'webp' }]))
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
@@ -44,7 +44,7 @@ describe('gulp-abraia', () => {
 
   it('padding image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
-      .pipe(abraia([{ width: 750, height: 750, rename: { suffix: '_p750x750' } }]))
+      .pipe(abraia([{ width: 750, height: 750, output: '{name}_p750x750.{ext}' }]))
       // .pipe(gulp.dest('images'))
       .once('data', (data) => {
         assert(data.isBuffer())
@@ -56,6 +56,24 @@ describe('gulp-abraia', () => {
     gulp.src('images/fashion-clothes.jpg')
       .pipe(abraia([{ width: 750, action: 'test.atn', output: '{name}_c750x750.jpg' }]))
       // .pipe(gulp.dest('images'))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(30000)
+
+  it('create poster from video file', (done) => {
+    gulp.src('images/coffee.mp4')
+      .pipe(abraia([{ output: '{name}_p.jpg' }]))
+      .once('data', (data) => {
+        assert(data.isBuffer())
+        done()
+      })
+  }).timeout(30000)
+
+  it('create video poster with logo', (done) => {
+    gulp.src('images/coffee.mp4')
+      .pipe(abraia([{ action: 'traffic.atn', output: '{name}_l.jpg' }]))
       .once('data', (data) => {
         assert(data.isBuffer())
         done()
