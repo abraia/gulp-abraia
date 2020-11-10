@@ -13,7 +13,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('resize image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
@@ -22,7 +22,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('convert image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
@@ -31,7 +31,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('smartcrop image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
@@ -40,7 +40,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('padding image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
@@ -50,7 +50,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('canvas image from buffer file', (done) => {
     gulp.src('images/fashion-clothes.jpg')
@@ -60,7 +60,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(10000)
 
   it('create poster from video file', (done) => {
     gulp.src('images/coffee.mp4')
@@ -69,7 +69,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(50000)
 
   it('create video poster with logo', (done) => {
     gulp.src('images/coffee.mp4')
@@ -78,7 +78,7 @@ describe('gulp-abraia', () => {
         assert(data.isBuffer())
         done()
       })
-  }).timeout(30000)
+  }).timeout(50000)
 
   // it('emit error on wrong file', (done) => {
   //   gulp.src('index.js')
@@ -88,5 +88,5 @@ describe('gulp-abraia', () => {
   //       assert(err instanceof Object)
   //       done()
   //     })
-  // }).timeout(30000)
+  // }).timeout(10000)
 })
