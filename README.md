@@ -11,8 +11,8 @@ With the Abraia Gulp plugin you can easily configure a local folder (on Windows,
 
 Focus on ecommerce product and marketing images, you can:
 
-- Get [perfectly optimized JPEG, PNG, GIF, WebP, and SVG images](/docs/image-optimization/).
-- Create several [optimized variants for your responsive design](/docs/image-optimization/) from just once high quality master image.
+- Get [perfectly optimized JPEG, PNG, GIF, WebP, and SVG images](https://abraia.me/docs/image-optimization/).
+- Create several [optimized variants for your responsive design](https://abraia.me/docs/image-optimization/) from just once high quality master image.
 - Automate the creation of multichannel images (e.g. for your social media or marketplace) using templates.
 - You can also brand and watermark your images and photos for web.
 
